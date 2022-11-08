@@ -17,5 +17,6 @@ module.exports = {
   //agregar reglas
   rules: {
     semi: ["error", "always"],
+    "jsx-a11y/anchor-is-valid": 1,
   },
 };
