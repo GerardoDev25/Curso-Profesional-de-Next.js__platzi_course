@@ -1,11 +1,11 @@
 import { addProduct } from "@api/product";
 import { useRef } from "react";
 
-export function FormProduct() {
+export function FormProduct({ setOpen, setAlert }) {
   const formRef = useRef(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const formData = new FormData(formRef.current);
     const data = {
       title: formData.get("title"),
@@ -14,8 +14,24 @@ export function FormProduct() {
       categoryId: parseInt(formData.get("category")),
       images: [formData.get("images").name],
     };
-
-    addProduct(data).then(console.log);
+    addProduct(data)
+      .then(() => {
+        setAlert({
+          active: true,
+          message: "Product added successfully",
+          type: "success",
+          autoClose: false,
+        });
+        setOpen(false);
+      })
+      .catch((error) => {
+        setAlert({
+          active: true,
+          message: error.message,
+          type: "error",
+          autoClose: false,
+        });
+      });
   };
 
   return (
