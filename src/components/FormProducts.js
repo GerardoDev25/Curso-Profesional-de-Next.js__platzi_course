@@ -1,3 +1,4 @@
+import { addProduct } from "@api/product";
 import { useRef } from "react";
 
 export function FormProduct() {
@@ -13,7 +14,8 @@ export function FormProduct() {
       categoryId: parseInt(formData.get("category")),
       images: [formData.get("images").name],
     };
-    console.log(data);
+
+    addProduct(data).then(console.log);
   };
 
   return (
