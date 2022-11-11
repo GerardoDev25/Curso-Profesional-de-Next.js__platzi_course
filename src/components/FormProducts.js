@@ -1,9 +1,8 @@
 import { addProduct } from "@api/product";
 import { useRef } from "react";
 
-export function FormProduct({ setOpen, setAlert }) {
+export function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
@@ -47,6 +46,7 @@ export function FormProduct({ setOpen, setAlert }) {
                 Title
               </label>
               <input
+                defaultValue={product?.title}
                 type="text"
                 name="title"
                 id="title"
@@ -61,6 +61,7 @@ export function FormProduct({ setOpen, setAlert }) {
                 Price
               </label>
               <input
+                defaultValue={product?.price}
                 type="number"
                 name="price"
                 id="price"
@@ -77,6 +78,7 @@ export function FormProduct({ setOpen, setAlert }) {
               <select
                 id="category"
                 name="category"
+                defaultValue={product?.category}
                 autoComplete="category-name"
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
@@ -96,6 +98,7 @@ export function FormProduct({ setOpen, setAlert }) {
                 Description
               </label>
               <textarea
+                defaultValue={product?.description}
                 name="description"
                 id="description"
                 autoComplete="description"
@@ -107,7 +110,7 @@ export function FormProduct({ setOpen, setAlert }) {
               <div>
                 <label
                   className="block text-sm font-medium text-gray-700"
-                  htmlFor="no_input"
+                  htmlFor="no-item"
                 >
                   Cover photo
                 </label>
@@ -134,6 +137,7 @@ export function FormProduct({ setOpen, setAlert }) {
                       >
                         <span>Upload a file</span>
                         <input
+                          defaultValue={product?.images}
                           id="images"
                           name="images"
                           type="file"

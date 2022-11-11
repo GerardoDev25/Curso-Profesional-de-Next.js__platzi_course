@@ -7,6 +7,7 @@ import endPoints from "@services/api";
 import { Alert } from "@common/Alert";
 import { useAlert } from "@hooks/useAlert";
 import { FormProduct } from "@components/FormProducts";
+
 import { deleteProduct } from "@api/product";
 
 export default function Products() {
