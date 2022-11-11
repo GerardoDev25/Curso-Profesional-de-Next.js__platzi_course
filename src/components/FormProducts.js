@@ -1,8 +1,11 @@
-import { addProduct } from "@api/product";
+import { addProduct, updateProduct } from "@api/product";
+import { useRouter } from "next/router";
 import { useRef } from "react";
 
 export function FormProduct({ setOpen, setAlert, product }) {
   const formRef = useRef(null);
+  const router = useRouter();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
@@ -13,24 +16,31 @@ export function FormProduct({ setOpen, setAlert, product }) {
       categoryId: parseInt(formData.get("category")),
       images: [formData.get("images").name],
     };
-    addProduct(data)
-      .then(() => {
-        setAlert({
-          active: true,
-          message: "Product added successfully",
-          type: "success",
-          autoClose: false,
-        });
-        setOpen(false);
-      })
-      .catch((error) => {
-        setAlert({
-          active: true,
-          message: error.message,
-          type: "error",
-          autoClose: false,
-        });
+
+    if (product) {
+      updateProduct(product.id, data).then(() => {
+        router.push("/dashboard/product/");
       });
+    } else {
+      addProduct(data)
+        .then(() => {
+          setAlert({
+            active: true,
+            message: "Product added successfully",
+            type: "success",
+            autoClose: false,
+          });
+          setOpen(false);
+        })
+        .catch((error) => {
+          setAlert({
+            active: true,
+            message: error.message,
+            type: "error",
+            autoClose: false,
+          });
+        });
+    }
   };
 
   return (
@@ -108,10 +118,7 @@ export function FormProduct({ setOpen, setAlert, product }) {
             </div>
             <div className="col-span-6">
               <div>
-                <label
-                  className="block text-sm font-medium text-gray-700"
-                  htmlFor="no-item"
-                >
+                <label className="block text-sm font-medium text-gray-700">
                   Cover photo
                 </label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
